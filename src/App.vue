@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import Card from "./components/Card";
 
 export default {
@@ -12,10 +13,18 @@ export default {
   components: {
     Card
   },
+  data() {
+    return {
+      company: []
+    }
+  },
+   mounted() {
+    this.getCompanyData()
+  },
   methods: {
 
     async getCompanyData() {
-      let company = this.props.company,
+      let company = 'tsla',
       token = "uojwh6sISmZX6qqbgzuh3jruxQJzKJJP9VxMhunjDIZEqJO770i8vAWtitKw";
     axios
       .get(
@@ -26,11 +35,8 @@ export default {
       )
       .then(res => {
         // handle success
-        let response = res.data.data;
-        this.setState({ params: response });
-        console.log(res);
-        console.log(res.data.data[0]);
-        console.log(this.state.params);
+        this.company = res.data.data;
+        console.log(this.company);
       })
       .catch(error => {
         // handle error
